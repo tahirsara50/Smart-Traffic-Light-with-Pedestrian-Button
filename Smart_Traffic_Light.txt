@@ -1,0 +1,180 @@
+// ===== LEDs =====
+const int GREEN = 11;
+const int YELLOW = 12;
+const int RED = 13;
+
+// ===== Button =====
+const int BUTTON = 10;
+
+// ===== 7 Segment =====
+const int A = 6;
+const int B = 5;
+const int C = 4;
+const int D = 3;
+const int E = 2;
+const int F = A0;
+const int G = A1;
+
+
+void setup() {
+
+  pinMode(GREEN, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(RED, OUTPUT);
+
+  pinMode(BUTTON, INPUT_PULLUP);
+
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(G, OUTPUT);
+
+  // 🔴 البداية
+  digitalWrite(RED, HIGH);
+  digitalWrite(YELLOW, LOW);
+  digitalWrite(GREEN, LOW);
+
+  eteindreSegment();
+}
+
+
+void loop() {
+
+  if (digitalRead(BUTTON) == LOW) {
+
+    // 🟡 YELLOW pendant 3 secondes
+    digitalWrite(RED, LOW);
+    digitalWrite(YELLOW, HIGH);
+    digitalWrite(GREEN, LOW);
+
+    delay(3000);
+
+
+    // 🟢 GREEN + compte à rebours EN MÊME TEMPS
+    digitalWrite(YELLOW, LOW);
+    digitalWrite(GREEN, HIGH);
+
+    // 8 → 0
+    for (int i = 8; i >= 0; i--) {
+
+      afficher(i);
+
+      delay(1000);
+    }
+
+
+    // 🔴 RED
+    digitalWrite(GREEN, LOW);
+    digitalWrite(RED, HIGH);
+
+    eteindreSegment();
+
+
+    // attendre le relâchement du bouton
+    while (digitalRead(BUTTON) == LOW) {
+      delay(10);
+    }
+
+    delay(200);
+  }
+}
+
+
+// ===============================
+// Afficher un chiffre
+// ===============================
+void afficher(int chiffre) {
+
+  eteindreSegment();
+
+  switch (chiffre) {
+
+    case 0:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      break;
+
+    case 1:
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      break;
+
+    case 2:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+
+    case 3:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+
+    case 4:
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+
+    case 5:
+      digitalWrite(A, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+
+    case 6:
+      digitalWrite(A, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+
+    case 7:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      break;
+
+    case 8:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, HIGH);
+      digitalWrite(E, HIGH);
+      digitalWrite(F, HIGH);
+      digitalWrite(G, HIGH);
+      break;
+  }
+}
+
+
+// ===============================
+// Éteindre le 7-segment
+// ===============================
+void eteindreSegment() {
+
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
+}
