@@ -47,7 +47,7 @@ Test the circuit and pedestrian button directly in Tinkercad.
 **Sara Tahir**
 Electronic Engineering Student
 
-## 📄 License
+##  License
 
 This project is for educational purposes.
 
